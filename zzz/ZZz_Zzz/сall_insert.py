@@ -7,7 +7,8 @@ from temp import Info
 
 @dp.callback_query_handler(text='insert')
 async def call_insert(call: CallbackQuery):
-    inn = call.message.text.split('\n')[2].split(":")[1].strip()
+    inn = Info(call.message.text).slovo
+
     await call.message.answer(inn)
     async with aiosqlite.connect('data/test.sql') as db:
         async with db.execute(f'''SELECT * FROM test WHERE ИНН={inn}''') as cur:
@@ -15,8 +16,8 @@ async def call_insert(call: CallbackQuery):
             if firm:
                 await call.message.answer(f'{firm[0][:-1:]} уже есть в списке на проверку')
             else:
-                c = Info(call.message.text)
-                print(c.name)
+                c = Info(call.message.text).slovo
+                print(c)
                 await call.message.answer(f'такого {inn} нет')
 
         await cur.close()

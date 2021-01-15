@@ -1,7 +1,10 @@
 import asyncio
+import os
+
 import httpx
 import pandas
 from datetime import datetime, timedelta
+from data.config import BASE_DIR
 
 from bs4 import BeautifulSoup
 from fake_useragent import UserAgent
@@ -13,7 +16,7 @@ name_org, adress, inn_org, ogrn_org, kapital, data_reg, okved_org = [], [], [], 
 def get_date():
     """Получение даты для автоматической работы"""
     today = datetime.today()
-    date = today - timedelta(days=1)
+    date = today - timedelta(days=2)
     yesterday = date.strftime("%Y-%m-%d")
     month = today.strftime("%b")
     return yesterday, month
@@ -113,7 +116,7 @@ async def get_info(data):
 async def write_exl(name_org, adress, inn_org, ogrn_org, kapital, data_reg, okved_org):
     """Запись в ексель файл"""
     logger.info('Запись данныхв файл')
-    file = str(get_date()[1] + ' ' + get_date()[0])
+    file = str(get_date()[1] + ' ' + get_date()[0]) + '.xlsx'
     df = pandas.DataFrame()
     df['Название'] = name_org
     df['Адрес'] = adress
@@ -123,7 +126,7 @@ async def write_exl(name_org, adress, inn_org, ogrn_org, kapital, data_reg, okve
     df['Дата_рег'] = data_reg
     df['ОКВЕД'] = okved_org
 
-    writer = pandas.ExcelWriter(f'./excel/{file}.xlsx', engine='xlsxwriter')
+    writer = pandas.ExcelWriter(os.path.join(BASE_DIR, 'excel', file), engine='xlsxwriter')
     df.to_excel(writer, sheet_name='Лист1', index=False)
 
     writer.sheets['Лист1'].set_column('A:A', 30)
@@ -139,8 +142,6 @@ async def write_exl(name_org, adress, inn_org, ogrn_org, kapital, data_reg, okve
 
 async def scrape_task(url):
     html = await fetch(url)
-    # await write_exl(name_org=name_org, adress=adress, inn_org=inn_org, ogrn_org=ogrn_org, data_reg=data_reg,
-    #                 okved_org=okved_org, kapital=kapital)
 
 
 async def main():

@@ -34,24 +34,4 @@ async def get_name_firm(inn: int):
         "okved_org": res['ul'][0]['reg_date'],
 
     }
-    # name_org = res['ul'][0]['name']
-    # ogrn_org = res['ul'][0]['ogrn']
-    # inn_org = str(res['ul'][0]['inn'])[3:13]
-    # region_org = res['ul'][0]['region']
-    # address_org = res['ul'][0]['address']
-    # position = res['ul'][0]['ceo_type']
-    # position_fio = res['ul'][0]['snippet_string']
-    # okved_org = res['ul'][0]['main_okved_id']
-    # okved_descr = res['ul'][0]['okved_descr']
-    # capital = str(res['ul'][0]['authorized_capital']).split(".")[0]
-    # date_reg_org = res['ul'][0]['reg_date']
-    # reply_text = (f'НАЗВАНИЕ :<b>{name_org}</b>/\n'
-    #               f'ОГРН : <b>{ogrn_org}</b>/\n'
-    #               f'ИНН : <b>{inn_org}</b>\n'
-    #               f'РЕГИОН : <b>{region_org}</b>\n'
-    #               f'АДРЕСС : <b>{address_org}</b>\n'
-    #               f'{position} : <b>{position_fio}</b>\n'
-    #               f'{okved_org} : <b>{okved_descr}</b>\n'
-    #               f'УСТАВНОЙ КАПИТАЛ : <b>{capital}</b>\n'
-    #               f'ДАТА РЕГ : <b>{date_reg_org}</b>')
     return dict_firm
