@@ -5,7 +5,8 @@ from data.config import BASE_DIR
 from pdf2image import convert_from_path
 
 
-async def pdf_to_tiff(file: str) -> str:
+async def pdf_to_tiff(file: str, id: str):
+    print(file)
     file_pdf_dir = os.path.join(BASE_DIR, 'excel', file)
     pages = convert_from_path(
         file_pdf_dir,
@@ -18,18 +19,4 @@ async def pdf_to_tiff(file: str) -> str:
         tiff_dir = os.path.join(BASE_DIR, 'excel', base_filename)
         page.save(tiff_dir, 'JPEG')
         doc = open(tiff_dir, 'rb')
-        await shield(bot.send_document(doc))
-    # with tempfile.TemporaryDirectory() as path:
-    #     images_from_path = convert_from_path(
-    #         file_pdf_dir,
-    #         output_folder=os.path.join(BASE_DIR, 'TEMP'),
-    #         last_page=None,
-    #         dpi=300,
-    #         first_page=0,
-    #         grayscale=True
-    #     )
-    # base_filename = os.path.splitext(os.path.basename(file_pdf_dir))[0] + '.tiff'
-    # tiff_dir = os.path.join(BASE_DIR, 'excel', base_filename)
-    # for page in images_from_path:
-    #     page.save(tiff_dir, 'JPEG')
-    # return tiff_dir
+        await shield(bot.send_document(id, doc))

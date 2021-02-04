@@ -29,11 +29,11 @@ async def handle_docs_audio(message: types.Message):
             elif message.document.mime_type == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
                 await convert_docx_to_pdf.to_tiff(message.document.file_name)
 
+            elif message.document.mime_type == 'application/pdf':
+                await convert_pdf_to_tiff.pdf_to_tiff(message.document.file_name, message.chat.id)
+
             elif message.document.mime_type == 'image/jpeg' or 'image/png':
                 content = await convert_jpg_to_tiff._to_tiff(message.document.file_name)
-
-            elif message.document.mime_type == 'application/pdf':
-                content = await convert_pdf_to_tiff.pdf_to_tiff(message.document.file_name)
 
             elif message.document.mime_type == 'text/plain':
                 with open(file_write, 'r') as f:
