@@ -1,7 +1,7 @@
 import aiofiles
 import aiosqlite
 from aiogram.types import CallbackQuery
-from excel import BASE_DIR
+from data.config import BASE_DIR
 from loader import dp
 from Keyboards.inline.inline_check_db import key_check_db
 

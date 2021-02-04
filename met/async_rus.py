@@ -16,7 +16,7 @@ name_org, adress, inn_org, ogrn_org, kapital, data_reg, okved_org = [], [], [], 
 def get_date():
     """Получение даты для автоматической работы"""
     today = datetime.today()
-    date = today - timedelta(days=2)
+    date = today - timedelta(days=3)
     yesterday = date.strftime("%Y-%m-%d")
     month = today.strftime("%b")
     return yesterday, month
@@ -37,7 +37,7 @@ async def get_count(url):
         'Upgrade-Insecure-Requests': '1',
         'User-Agent': ua
     }
-    response = httpx.get(url, headers=headers)
+    response = httpx.get(url, headers=headers, verify=False)
     soup = BeautifulSoup(response.text, 'lxml')
     count = soup.find('ul', class_='paging-list').find_all('a')[-2].text
     return count
@@ -60,7 +60,7 @@ async def fetch(url):
         'Upgrade-Insecure-Requests': '1',
         'User-Agent': ua
     }
-    async with httpx.AsyncClient() as client:
+    async with httpx.AsyncClient(verify=False) as client:
         response = await client.get(url, headers=headers)
         await get_data(response.text)
 
