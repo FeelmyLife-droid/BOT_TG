@@ -6,6 +6,7 @@ __pycache__
 .DS_Store
 .idea
 TEMP/
+data/config.py
 db.sqlite3
 media
 # Backup files #
